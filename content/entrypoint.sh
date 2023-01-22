@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Write dyno start time
-echo $(date +%s) > /workdir/dyno_start_time
+echo $(date +%s) > /workdir/container_start_time
 
 mkdir -p /mnt/data/config /mnt/data/qbit_downloads /mnt/data/aria2_downloads /mnt/data/videos /workdir/.pyload /mnt/data/.cache
 
@@ -29,11 +29,11 @@ SEND_TG_MSG() {
             PROXY_PARAM="-x ${TG_PROXY}"
         fi
         if [ "${GLOBAL_LANGUAGE}" = "chs" ]; then
-            msgbody="Dyno 已启动"
+            msgbody="容器已启动"
         else
-            msgbody="Dyno started"
+            msgbody="Container started"
         fi
-        title="Heroku"
+        title="Patr"
         timestamp="$(date +"%m/%d %H:%M:%S")"
         msg="$title $timestamp\n$(echo "$msgbody" | sed -e 's|\\|\\\\|g' -e 's|\n|\\n|g' -e 's|\t|\\t|g' -e 's|\"|\\"|g')"
         entities="[{\"offset\":0,\"length\":${#title},\"type\":\"bold\"},{\"offset\":$((${#title} + 1)),\"length\":${#timestamp},\"type\":\"italic\"}]"
