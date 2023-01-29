@@ -19,6 +19,7 @@ SEND_TG_MSG() {
     SCRIPT_CONF="/mnt/data/config/script.conf"
     TELEGRAM_BOT_TOKEN="$(grep ^telegram-bot-token "${SCRIPT_CONF}" | cut -d= -f2-)"
     TELEGRAM_CHAT_ID="$(grep ^telegram-chat-id "${SCRIPT_CONF}" | cut -d= -f2-)"
+    TELEGRAM_TITLE="$(grep ^telegram-notification-title "${SCRIPT_CONF}" | cut -d= -f2-)"
     TG_PROXY="$(grep ^telegram-proxy "${SCRIPT_CONF}" | cut -d= -f2-)"
     if [ "${TELEGRAM_CHAT_ID}" != "" ]; then        
         if [ "${TG_PROXY}" != "" ]; then
@@ -29,7 +30,7 @@ SEND_TG_MSG() {
         else
             msgbody="Container started"
         fi
-        title="Patr"
+        title="${TELEGRAM_TITLE}"
         timestamp="$(date +"%m/%d %H:%M:%S")"
         msg="$title $timestamp\n$(echo "$msgbody" | sed -e 's|\\|\\\\|g' -e 's|\n|\\n|g' -e 's|\t|\\t|g' -e 's|\"|\\"|g')"
         entities="[{\"offset\":0,\"length\":${#title},\"type\":\"bold\"},{\"offset\":$((${#title} + 1)),\"length\":${#timestamp},\"type\":\"italic\"}]"
